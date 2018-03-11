@@ -1,0 +1,23 @@
+---
+- hosts: '{{ var_hosts | default("dummyhost") }}'
+  become: true
+  vars:
+    pocketmine_dir: /usr/local/pocketmine
+
+  tasks:
+    - name: Add the epel-release on CentOS
+      when: "ansible_os_family == 'RedHat'"
+      yum:
+        name: epel-release
+        state: latest
+
+    - name: Create directory for pocketmine
+      file:
+        path: '{{ pocketmine_dir }}'
+        state: directory
+
+    - name: Download pre-build scripts
+      get_url:
+        url: https://raw.githubusercontent.com/PocketMine/php-build-scripts/master/installer.sh
+        dest: '{{ pocketmine_dir }}'/installer.sh
+
