@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    pocketmine_dir: pocketmine
+    pocketmine_user: dan
+    pocketmine_group: dan
+
+  tasks:
+    - name: Create directory
+      file:
+        path: '{{ pocketmine_dir }}'
+        state: directory
+
+    - name: Download plugins
+      import_tasks: download-plugins.yml
+

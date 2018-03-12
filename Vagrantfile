@@ -15,8 +15,8 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
-  config.vm.network "forwarded_port", guest: 25565, host: 25565
-  config.vm.network "forwarded_port", guest: 8123, host: 8123
+  config.vm.network "forwarded_port", guest: 19132, host: 19132, protocol: "udp"
+  config.vm.network "forwarded_port", guest: 19132, host: 19132, protocol: "tcp"
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.

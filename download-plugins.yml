@@ -1,0 +1,18 @@
+---
+- name: 'Create plugins directory'
+  file:
+    path: '{{ pocketmine_dir }}/plugins'
+    state: directory
+    owner: '{{ pocketmine_user }}'
+    group: '{{ pocketmine_group }}'
+
+- name: 'Download Plugins'
+  get_url:
+    url: '{{ item }}'
+    dest: '{{ pocketmine_dir }}/plugins/{{ item | basename }}' 
+    owner: '{{ pocketmine_user }}'
+    group: '{{ pocketmine_group }}'
+  with_items:
+    - https://poggit.pmmp.io/r/23446/BadWordBlocker.phar
+    - https://poggit.pmmp.io/r/23451/AllSigns.phar 
+    - https://poggit.pmmp.io/r/22639/Worlds.phar
