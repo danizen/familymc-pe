@@ -7,7 +7,7 @@
     pocketmine_group: pmmp
     pocketmine_service_name: pocketmine
     pocketmine_console_fifo: /var/run/{{ pocketmine_service_name }}/console
-    pocketmine_console_fifo_mode: 0666
+    pocketmine_console_fifo_mode: '0666'
 
   tasks:
     - name: Add additional yum repositories on CentOS
