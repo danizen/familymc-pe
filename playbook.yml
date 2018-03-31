@@ -5,6 +5,9 @@
     pocketmine_dir: /home/pocketmine
     pocketmine_user: pmmp
     pocketmine_group: pmmp
+    pocketmine_service_name: pocketmine
+    pocketmine_console_fifo: /var/run/{{ pocketmine_service_name }}/console
+    pocketmine_console_fifo_mode: 0666
 
   tasks:
     - name: Add additional yum repositories on CentOS
@@ -44,9 +47,11 @@
         mode: 0755
 
     - name: Build pocketmine
-      command: '{{ pocketmine_dir }}/pmmp_installer.sh'
+      command: 'su - {{pocketmine_user}} -c "{{ pocketmine_dir }}/pmmp_installer.sh"'
       args:
         chdir: '{{ pocketmine_dir }}'
         creates: '{{ pocketmine_dir }}/PocketMine-MP.phar'
 
     - import_tasks: download-plugins.yml
+
+    - import_tasks: systemd.yml

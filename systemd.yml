@@ -1,0 +1,29 @@
+- name: Create pcoketmine service
+  template:
+    src: "templates/{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item | replace('pocketmine', pocketmine_service_name) }}"
+    owner: root
+    group: root
+    mode: '0644'
+  with_items:
+    - pocketmine.service
+    - pocketmine.socket
+  register: systemd_service_config
+
+- name: reload systemd
+  command: systemctl daemon-reload
+  when: systemd_service_config.changed
+
+- name: configure pocketmine console directory
+  template:
+    src: templates/tmpfiles.d/pocketmine.conf.j2
+    dest: "/etc/tmpfiles.d/{{ pocketmine_service_name }}.conf"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: create pocketmine console directory
+  command: /usr/bin/systemd-tmpfiles --create --exclude /dev
+  args:
+    creates: '/var/run/{{ pocketmine_service_name }}'
+

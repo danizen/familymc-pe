@@ -1,0 +1,11 @@
+[Unit]
+Description={{ pocketmine_service_name | title }} Server Console
+
+[Socket]
+ListenFIFO={{ pocketmine_console_fifo }}
+SocketUser={{ pocketmine_user }}
+SocketGroup={{ pocketmine_group }}
+SocketMode={{ pocketmine_console_fifo_mode }}
+
+[Install]
+WantedBy=sockets.target

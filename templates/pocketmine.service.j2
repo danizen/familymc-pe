@@ -1,0 +1,23 @@
+[Unit]
+Description={{ pocketmine_service_name | title }} Server
+After=network.target
+Requires={{ pocketmine_service_name }}.socket
+
+[Service]
+User={{ pocketmine_user }}
+Group={{ pocketmine_group }}
+WorkingDirectory={{ pocketmine_dir }}
+StandardInput=socket
+StandardOutput=journal
+StandardError=journal
+ExecStart=./start.sh
+ExecStop=/bin/sh -c "echo 'save-all' > {{ pocketmine_console_fifo }}"
+ExecStop=/bin/sh -c "echo 'stop' > {{ pocketmine_console_fifo }}"
+Restart=on-failure
+ProtectHome=true
+ProtectSystem=full
+PrivateTmp=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target
